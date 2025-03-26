@@ -30,6 +30,7 @@ body {
 .card:hover {
   transform: scale(1.05) rotate(1deg);
   box-shadow: 0 0 50px rgba(255, 0, 0, 0.603);
+  cursor: pointer;
 }
 
 img {
