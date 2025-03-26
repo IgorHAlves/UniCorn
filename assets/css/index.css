@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: black;
+}
+
+.tituloPagina {
+  color: red;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 20px;
+}
+
+.card {
+  background-color: #424242;
+  color: white;
+  border-radius: 10px;
+  width: 150px;
+  padding: 10px;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 0 50px rgba(255, 0, 0, 0.603);
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: red;
+  color: rgb(255, 255, 255);
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: black;
+  cursor: not-allowed;
+}

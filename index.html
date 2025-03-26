@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+  <title>UniCorn</title>
+</head>
+
+<body>
+  <!-- navbar -->
+  <h1 class="tituloPagina">UniCorn</h1>
+  <header>
+    <nav>
+      <ul>
+        <li>Filmes</li>
+        <li>Séries</li>
+      </ul>
+    </nav>
+  </header>
+  <!-- fim navbar -->
+
+  <div class="container" id="movie-container"></div>
+  <button id="prev">Anterior</button>
+  <button id="next">Próximo</button>
+  <script>
+    let pagina = 1
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+
+    async function getMovies(pagina) {
+      try {
+        let container = document.getElementById("movie-container");
+        container.innerHTML = "";
+        const options = {
+          method: "GET",
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MTk5ZmY3NDQ3MWI0Yjg3ZTgxNzhlNzhhNzQzNDU1ZCIsIm5iZiI6MTcxODg5NzQzNC43ODMsInN1YiI6IjY2NzQ0YjFhYTU3YWFjZTM4YzkzZDZjYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LSetfOLMKfwDLCxJfe3ZQB03CSg60Fhc8FzDBz5ezXY",
+          },
+        };
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=${pagina}`,
+          options
+        );
+        let data = await response.json();
+        console.log(data);
+        data.results.forEach((movie) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
+
+            <p>${movie.title}</p>`;
+
+          card.addEventListener("click", () => {
+            window.location.href = `movie.html?id=${movie.id}`;
+          });
+
+
+          container.appendChild(card);
+
+          if (pagina == 1) {
+            prevButton.disabled = true
+          }
+          else {
+            prevButton.disabled = false
+          }
+        });
+      } catch (error) { }
+    }
+
+    prevButton.addEventListener("click", () => {
+      if (pagina > 1) {
+        pagina--;
+        console.log(pagina);
+
+        getMovies(pagina)
+      }
+    });
+
+    nextButton.addEventListener("click", () => {
+      pagina++
+      getMovies(pagina)
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      getMovies(pagina);
+    });
+  </script>
+</body>
+
+</html>
